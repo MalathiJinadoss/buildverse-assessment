@@ -1,0 +1,24 @@
+#provision EC2 instance 
+- hosts: localhost
+  vars_files: 
+    - secure.yml
+  tasks:
+  -name: provision os in aws
+   ec2:
+    key_name: "ansiblekey"
+    #availability_zone: "ap-south-1a"
+    instance_type: "t2.micro"
+    image: "ami-oebc1ac48dfd14136"
+    instance_tags:
+      name: Wordpress
+      wait: yes
+      count: 1
+      vpc_subnet_id: "subnet-010ffe066d5842d25"
+      assign_public_ip: yes
+      region: "ap-south-1"
+      state: present
+      group_id: "sg-02b42e63e4d4a4c9b"
+      aws_access_key: "{{ accesskey }}"
+      aws_secret_key: "{{ secretkey }}"
+#here i have created vault file for access key and security key with variables access key and secretkey. this playbook will provision an ec2 instance on aws cloud.
+      
